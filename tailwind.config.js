@@ -5,6 +5,7 @@ module.exports = {
     darkMode:'class',
     fontFamily: {
       montserrat: ["Montserrat"],
+      roboto:['Roboto']
     },
     extend: {},
   },
