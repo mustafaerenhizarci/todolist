@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const mode = {
   light:
     "transition flex justify-start items-center w-11 h-6 rounded-full bg-gray-300 cursor-pointer",
-  dark: "transition flex justify-start items-center w-11 h-6 rounded-full bg-orange-400 cursor-pointer",
+  dark: "transition flex justify-start items-center w-11 h-6 rounded-full bg-blue-400 cursor-pointer",
 };
 
 const DarkMode = () => {

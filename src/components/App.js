@@ -5,9 +5,10 @@ import DarkMode from "./DarkMode";
 import TodoForm from "./TodoForm";
 import TodoHeader from "./TodoHeader";
 import TodoContainer from "./TodoContainer";
+import { ToastContainer, toast,Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const App = () => {
-
   const bgColors = [
     "bg-red-200 dark:bg-red-600",
     "bg-amber-200 dark:bg-amber-600",
@@ -19,26 +20,66 @@ const App = () => {
 
   const randomNumber = Math.floor(Math.random() * bgColors.length);
 
+  const starterTodos = [
+    {
+      id: 1,
+      content: "Meet with Alexa",
+      completed: false,
+      bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
+      editable: false,
+    },
+    {
+      id: 2,
+      content: "Prepare an essay about elephants",
+      completed: false,
+      bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
+      editable: false,
+    },
+    {
+      id: 3,
+      content: "Don't watch Game of thrones!",
+      completed: false,
+      bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
+      editable: false,
+    },
+  ];
+
   // States
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(starterTodos);
   const [inputValue, setInputValue] = useState("");
+  const [editableValue, setEditableValue] = useState("");
 
   // Functions
 
   function addTodo(e) {
-    e.preventDefault();
-    setTodos((prev) => {
-      return [
-        ...prev,
-        {
-          id: prev[0] !== undefined ? prev[prev.length - 1].id + 1 : 1,
-          content: inputValue,
-          completed:false,
-          bgColor: bgColors[randomNumber]
-        },
-      ];
-    });
+    if (inputValue.length > 0) {
+      setTodos((prev) => {
+        return [
+          ...prev,
+          {
+            id: prev[0] !== undefined ? prev[prev.length - 1].id + 1 : 1,
+            content: inputValue,
+            completed: false,
+            bgColor: bgColors[randomNumber],
+            editable: false,
+          },
+        ];
+      });
+    } else {
+      toast('Please enter at least 5 character!', {
+        position: "top-center",
+        autoClose: 500,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme:"dark"
+        });
+    }
+
     setInputValue("");
+    e.preventDefault();
   }
 
   function deleteTodo(e) {
@@ -50,25 +91,66 @@ const App = () => {
 
   function updateTodoCheck(e) {
     const todoID = Number(e.currentTarget.parentElement.id);
-    
-    setTodos(prev => {
+
+    setTodos((prev) => {
       return prev.map((el) => {
         if (el.id === todoID) {
-          el.completed = !el.completed
-          return el
+          el.completed = !el.completed;
+          return el;
         } else {
-          return el
+          return el;
         }
-      })
-      
-    })
+      });
+    });
+  }
 
-   
+  function enterEditMode(e) {
+    const todoID = Number(e.currentTarget.parentElement.id);
+
+    setTodos((prev) => {
+      return prev.map((todo) => {
+        if (todo.id === todoID) {
+          todo.editable = true;
+          setEditableValue(todo.content);
+          return todo;
+        } else {
+          return todo;
+        }
+      });
+    });
+  }
+
+  function saveUpdatedTodo(e) {
+    const todoID = Number(e.currentTarget.parentElement.id);
+
+    setTodos((prev) => {
+      return prev.map((todo) => {
+        if (todo.id === todoID) {
+          todo.content = editableValue;
+          todo.editable = false;
+          return todo;
+        } else {
+          return todo;
+        }
+      });
+    });
   }
 
   //-------------------------------------------------------------------------------------------//
   return (
     <div className="flex flex-col justify-center items-center">
+      <ToastContainer
+        transition={Slide}
+        position="top-center"
+        autoClose={500}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <DarkMode />
       <TodoHeader />
       <TodoForm
@@ -76,7 +158,17 @@ const App = () => {
         inputValue={inputValue}
         onClickButton={addTodo}
       />
-      <TodoContainer onCheckboxChange={updateTodoCheck} onClickDelete={deleteTodo} todos={todos} />
+      <TodoContainer
+        saveUpdatedTodo={saveUpdatedTodo}
+        editableValue={editableValue}
+        setEditableValue={(e) => {
+          setEditableValue(e.target.value);
+        }}
+        enterEditMode={enterEditMode}
+        onCheckboxChange={updateTodoCheck}
+        onClickDelete={deleteTodo}
+        todos={todos}
+      />
     </div>
   );
 };

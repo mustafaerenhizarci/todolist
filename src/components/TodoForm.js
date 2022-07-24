@@ -1,10 +1,17 @@
 import React from "react";
 
-const TodoForm = ({onClickButton,inputValue,onInputChange}) => {
+const TodoForm = ({
+  onClickButton,
+  inputValue,
+  onInputChange,
+  onClickEdit,
+}) => {
   return (
     <div>
       <form className="w-full flex justify-between items-center py-5 px-3 rounded-lg ">
         <input
+          required
+          id="todo-input"
           onChange={onInputChange}
           value={inputValue}
           autoFocus="on"
@@ -12,7 +19,10 @@ const TodoForm = ({onClickButton,inputValue,onInputChange}) => {
           placeholder="Give me some task..."
           type="text"
         />
-        <button onClick={onClickButton} className="w-1/5 mx-2 bg-green-300 rounded-md text-white text-4xl hover:bg-slate-800 hover:text-white transition duration-100">
+        <button
+          onClick={onClickButton}
+          className="w-1/5 mx-2 bg-green-300 rounded-md text-white text-4xl hover:bg-slate-800 hover:text-white transition duration-100"
+        >
           +
         </button>
       </form>
