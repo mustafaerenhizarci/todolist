@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Importing Components
 import DarkMode from "./DarkMode";
@@ -19,29 +19,13 @@ const bgColors = [
   "bg-cyan-200 dark:bg-cyan-600",
 ];
 
-
 const App = () => {
-
   const randomNumber = Math.floor(Math.random() * bgColors.length);
 
   const starterTodos = [
     {
       id: nanoid(),
-      content: "Meet with Alexa",
-      completed: false,
-      bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
-      editable: false,
-    },
-    {
-      id: nanoid(),
-      content: "Prepare an essay about elephants",
-      completed: false,
-      bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
-      editable: false,
-    },
-    {
-      id: nanoid(),
-      content: "Don't watch Game of thrones!",
+      content: "There is no todo!",
       completed: false,
       bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
       editable: false,
@@ -49,9 +33,18 @@ const App = () => {
   ];
 
   // States
-  const [todos, setTodos] = useState(starterTodos);
+  const [todos, setTodos] = useState(
+    localStorage.getItem("todos")
+      ? JSON.parse(localStorage.getItem("todos"))
+      : starterTodos
+  );
   const [inputValue, setInputValue] = useState("");
   const [editableValue, setEditableValue] = useState("");
+
+  useEffect(() => {
+    (todos.length === 0) ? localStorage.setItem('todos',JSON.stringify(starterTodos)) : localStorage.setItem("todos", JSON.stringify(todos));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todos]);
 
   // Functions
 
