@@ -5,8 +5,9 @@ import DarkMode from "./DarkMode";
 import TodoForm from "./TodoForm";
 import TodoHeader from "./TodoHeader";
 import TodoContainer from "./TodoContainer";
-import { ToastContainer, toast,Slide } from "react-toastify";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { nanoid } from "nanoid";
 
 const App = () => {
   const bgColors = [
@@ -22,21 +23,21 @@ const App = () => {
 
   const starterTodos = [
     {
-      id: 1,
+      id: nanoid(),
       content: "Meet with Alexa",
       completed: false,
       bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
       editable: false,
     },
     {
-      id: 2,
+      id: nanoid(),
       content: "Prepare an essay about elephants",
       completed: false,
       bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
       editable: false,
     },
     {
-      id: 3,
+      id: nanoid(),
       content: "Don't watch Game of thrones!",
       completed: false,
       bgColor: bgColors[Math.floor(Math.random() * bgColors.length)],
@@ -52,21 +53,21 @@ const App = () => {
   // Functions
 
   function addTodo(e) {
-    if (inputValue.length > 0) {
+    if (inputValue.length > 4) {
       setTodos((prev) => {
         return [
-          ...prev,
           {
-            id: prev[0] !== undefined ? prev[prev.length - 1].id + 1 : 1,
+            id: nanoid(),
             content: inputValue,
             completed: false,
             bgColor: bgColors[randomNumber],
             editable: false,
           },
+          ...prev,
         ];
       });
     } else {
-      toast('Please enter at least 5 character!', {
+      toast("Please enter at least 5 character!", {
         position: "top-center",
         autoClose: 500,
         hideProgressBar: true,
@@ -74,8 +75,8 @@ const App = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme:"dark"
-        });
+        theme: "dark",
+      });
     }
 
     setInputValue("");
@@ -83,14 +84,15 @@ const App = () => {
   }
 
   function deleteTodo(e) {
-    const todoID = Number(e.currentTarget.parentElement.id);
+    const todoID = e.currentTarget.parentElement.id;
+    console.log(todoID);
     setTodos((prev) => {
       return prev.filter((item) => item.id !== todoID);
     });
   }
 
   function updateTodoCheck(e) {
-    const todoID = Number(e.currentTarget.parentElement.id);
+    const todoID = e.currentTarget.parentElement.id;
 
     setTodos((prev) => {
       return prev.map((el) => {
@@ -105,7 +107,7 @@ const App = () => {
   }
 
   function enterEditMode(e) {
-    const todoID = Number(e.currentTarget.parentElement.id);
+    const todoID = e.currentTarget.parentElement.id;
 
     setTodos((prev) => {
       return prev.map((todo) => {
@@ -121,7 +123,7 @@ const App = () => {
   }
 
   function saveUpdatedTodo(e) {
-    const todoID = Number(e.currentTarget.parentElement.id);
+    const todoID = e.currentTarget.parentElement.id;
 
     setTodos((prev) => {
       return prev.map((todo) => {
