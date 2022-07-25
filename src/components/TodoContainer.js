@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import Todo from "./Todo";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 const TodoContainer = ({
   todos,
   onClickDelete,
@@ -12,9 +12,7 @@ const TodoContainer = ({
   saveUpdatedTodo,
 }) => {
   return (
-    <ul
-      className=" transition-all flex flex-col w-full justify-center items-center my-2 py-2 px-2"
-    >
+    <ul className="transition-all flex flex-col w-full justify-center items-center my-2 py-2 px-2">
       <AnimatePresence>
         {todos.map((todo) =>
           todo.editable ? (

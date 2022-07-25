@@ -1,5 +1,5 @@
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Todo = ({
   content,
@@ -13,7 +13,7 @@ const Todo = ({
   return (
     <motion.li
       id={id}
-      exit={{opacity:[1,0]}}
+      exit={{margin:0,padding:0,height:0,opacity:0,color:"transparent"}}
       animate={{ opacity: [0, 1]}}
       transition={{duration:0.5}}
       className={`flex justify-center max-h-max items-center w-full rounded-md my-1 drop-shadow-md ${bgColor}`}
