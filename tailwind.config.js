@@ -5,7 +5,7 @@ module.exports = {
     darkMode:'class',
     fontFamily: {
       montserrat: ["Montserrat"],
-      roboto:['Roboto']
+      edu:['Edu NSW ACT Foundation']
     },
     extend: {},
   },

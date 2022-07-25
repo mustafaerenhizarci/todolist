@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const mode = {
@@ -14,17 +14,27 @@ const DarkMode = () => {
     setDarkModeState((prev) => {
       if (prev === mode.light) {
         document.querySelector("html").classList.add("dark");
+        document.body.classList.replace("lightbg", "darkbg");
+        
         return mode.dark;
       } else {
         document.querySelector("html").classList.remove("dark");
+        document.body.classList.replace("darkbg", "lightbg");
         return mode.light;
       }
     });
+    localStorage.setItem("darkmodeState", JSON.stringify(darkMode === mode.light));
   }
 
+  useEffect(() => {
+    (JSON.parse(localStorage.getItem('darkmodeState'))) ? handleDarkMode() : console.log("didnt change")
+  },[]);
+
   return (
-    <div className="relative flex flex-col justify-between items-center mt-10 mb-5">
-      <h1 className="font-montserrat font-light text-xl mb-2 dark:text-white">{darkMode === mode.light ? "Light":"Dark"} Mode</h1>
+    <div className="relative flex flex-col justify-between items-center mt-5">
+      <h1 className="font-montserrat font-light text-xl mb-2 dark:text-white">
+        {darkMode === mode.light ? "Light" : "Dark"} Mode
+      </h1>
       <div onClick={handleDarkMode} className={darkMode}>
         <motion.div
           animate={darkMode === mode.light ? { x: 0 } : { x: "100%" }}

@@ -9,15 +9,18 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { nanoid } from "nanoid";
 
+//
+const bgColors = [
+  "bg-red-200 dark:bg-red-600",
+  "bg-amber-200 dark:bg-amber-600",
+  "bg-emerald-200 dark:bg-emerald-600",
+  "bg-orange-200 dark:bg-orange-600",
+  "bg-blue-200 dark:bg-blue-600",
+  "bg-cyan-200 dark:bg-cyan-600",
+];
+
+
 const App = () => {
-  const bgColors = [
-    "bg-red-200 dark:bg-red-600",
-    "bg-amber-200 dark:bg-amber-600",
-    "bg-emerald-200 dark:bg-emerald-600",
-    "bg-orange-200 dark:bg-orange-600",
-    "bg-blue-200 dark:bg-blue-600",
-    "bg-cyan-200 dark:bg-cyan-600",
-  ];
 
   const randomNumber = Math.floor(Math.random() * bgColors.length);
 
@@ -85,7 +88,6 @@ const App = () => {
 
   function deleteTodo(e) {
     const todoID = e.currentTarget.parentElement.id;
-    console.log(todoID);
     setTodos((prev) => {
       return prev.filter((item) => item.id !== todoID);
     });
