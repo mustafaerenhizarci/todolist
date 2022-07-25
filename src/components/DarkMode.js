@@ -9,7 +9,6 @@ const mode = {
 
 const DarkMode = () => {
   const [darkMode, setDarkModeState] = useState(mode.light);
-
   function handleDarkMode() {
     setDarkModeState((prev) => {
       if (prev === mode.light) {
@@ -28,6 +27,7 @@ const DarkMode = () => {
 
   useEffect(() => {
     (JSON.parse(localStorage.getItem('darkmodeState'))) ? handleDarkMode() : console.log("didnt change")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
   return (
